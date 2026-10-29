@@ -832,7 +832,7 @@ kbd {
   .tool-card { width: 170px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (pointer: coarse) {
   .menu { padding: 18px 20px 44px; overflow-y: auto; }
   .menu-top { font-size: 6px; }
   .menu-build { display: none; }
@@ -967,6 +967,11 @@ kbd {
   .planet-ring { width: 145px; height: 36px; }
   .planet-scan { width: 110px; height: 110px; }
   .planet-stats { display: none; }
+}
+
+@media (max-height: 560px) and (pointer: coarse) {
+  .hud-bottom { bottom: 24px; }
+  .notifications { top: auto; bottom: 58px; left: 50%; right: auto; translate: -50% 0; width: min(360px, 70vw); }
 }
 
 @media (pointer: coarse) and (min-width: 761px) {
