@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FracturedSkies" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">#05070D</item>
+        <item name="android:navigationBarColor">#05070D</item>
+        <item name="android:statusBarColor">#05070D</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:fontFamily">sans</item>
+    </style>
+</resources>

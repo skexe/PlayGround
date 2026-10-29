@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#05070d" />
+    <meta name="description" content="Fractured Skies: prototipo de exploración espacial procedural para Android Kotlin y web, inspirado en No Man's Sky." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>NO MAN'S SKY · FRACTURED SKIES</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene" aria-label="Planeta procedural en tiempo real"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="scanlines" aria-hidden="true"></div>
+      <div class="film-grain" aria-hidden="true"></div>
+
+      <section id="intro" aria-label="Pantalla de inicio">
+        <div class="intro-copy">
+          <div class="kicker"><span class="pulse-dot"></span> PROTOCOLO DE EXPLORACIÓN // ANDROID KOTLIN</div>
+          <div class="intro-meta">EXPEDICIÓN 01 · GALAXIA EUCLID · SEMILLA 4E4D5321A17</div>
+          <h1><span>NO MAN'S</span><span class="sky">SKY</span></h1>
+          <div class="subtitle">FRACTURED SKIES</div>
+          <div class="rule"><i></i></div>
+          <p class="lead">
+            Un universo procedural de <strong>18.4 trillones de planetas</strong>.
+            Cada estrella, criatura y ruina existe gracias a una semilla.
+          </p>
+          <div class="feature-row">
+            <span>SUPERVIVENCIA</span><span>EXPLORACIÓN</span><span>COMERCIO</span><span>EL NEXO</span>
+          </div>
+          <div class="intro-actions">
+            <button id="start-btn" class="btn primary" aria-label="Start">
+              <span class="btn-icon">▶</span>
+              <span class="btn-copy"><b>INICIAR EXPEDICIÓN</b><small>NUEVO UNIVERSO PROCEDURAL</small></span>
+            </button>
+            <button id="continue-btn" class="btn ghost" hidden>
+              <span class="btn-icon">◈</span>
+              <span class="btn-copy"><b>CONTINUAR</b><small>SEÑAL GUARDADA</small></span>
+            </button>
+            <button id="codex-btn" class="btn ghost small">
+              <span class="btn-icon">⌬</span>
+              <span class="btn-copy"><b>CÓDICE</b><small>ARCHIVO DEL ATLAS</small></span>
+            </button>
+          </div>
+          <div class="version-line"><span class="status-led"></span> PROTOTIPO JUGABLE · BUILD 1.0.0 · RENDER PROCEDURAL EN TIEMPO REAL</div>
+        </div>
+        <div class="intro-bottom">
+          <div class="intro-stat">
+            <span>UNIVERSO SEMBRADO</span>
+            <strong>18 446 744 073 709 551 616</strong>
+            <em>PLANETAS POSIBLES</em>
+          </div>
+          <div class="intro-hint">ARRASTRA PARA MIRAR · WASD PARA MOVERTE · E PARA ESCANEAR</div>
+        </div>
+      </section>
+
+      <div id="hud" class="hud hidden" aria-hidden="true">
+        <div class="hud-top">
+          <div class="panel system-panel">
+            <button id="menu-btn" class="icon-btn" aria-label="Menú">≡</button>
+            <div class="system-copy">
+              <div class="panel-label">SISTEMA ESTELAR</div>
+              <div id="system-name" class="system-name">AEORION</div>
+              <div id="planet-line" class="planet-line">PLANETA · BIOMA</div>
+              <div id="weather-line" class="weather-line">CLIMA · PELIGRO</div>
+            </div>
+            <div id="star-chip" class="star-chip">G-0</div>
+          </div>
+
+          <div class="compass-wrap">
+            <div class="compass"></div>
+            <div id="compass-labels" class="compass-labels"></div>
+            <div class="compass-pointer"></div>
+            <div class="compass-header"><span id="heading">000°</span> · N</div>
+          </div>
+
+          <div class="panel currency-panel">
+            <div class="currency-row">
+              <div><span class="panel-label">UNIDADES</span><b id="units">2.450</b></div>
+              <div><span class="panel-label">NANITOS</span><b id="nanites" class="cyan">12</b></div>
+            </div>
+            <div class="currency-sub"><span id="warp-cell-line">SALTO 1 · LANZAMIENTO 2</span><span id="wanted-stars" class="wanted"></span></div>
+          </div>
+        </div>
+
+        <div class="objective panel">
+          <span class="panel-label orange">OBJETIVO DE EXPEDICIÓN</span>
+          <p id="objective">Escanea el ecosistema local</p>
+          <div class="objective-progress"><i id="objective-bar"></i></div>
+        </div>
+
+        <aside class="vitals panel">
+          <div class="vital" data-vital="health"><div class="vital-head"><span>♥ VIDA</span><b id="health-value">100%</b></div><div class="meter"><i id="health-bar"></i></div></div>
+          <div class="vital" data-vital="shield"><div class="vital-head"><span>◈ ESCUDO</span><b id="shield-value">100%</b></div><div class="meter"><i id="shield-bar"></i></div></div>
+          <div class="vital" data-vital="hazard"><div class="vital-head"><span id="hazard-label">◌ ENTORNO</span><b id="hazard-value">100%</b></div><div class="meter"><i id="hazard-bar"></i></div></div>
+          <div class="vital" data-vital="oxygen"><div class="vital-head"><span>O₂ SOPORTE</span><b id="oxygen-value">100%</b></div><div class="meter"><i id="oxygen-bar"></i></div></div>
+          <div class="vital" data-vital="jet"><div class="vital-head"><span>↑ JETPACK</span><b id="jet-value">100%</b></div><div class="meter"><i id="jet-bar"></i></div></div>
+        </aside>
+
+        <div id="target" class="target hidden">
+          <span id="target-symbol" class="target-symbol">C</span>
+          <div><b id="target-name">CARBONO</b><span id="target-sub">VETA · 32 m</span></div>
+          <i id="target-progress"></i>
+        </div>
+
+        <div class="minimap panel">
+          <canvas id="radar" width="190" height="190" aria-label="Radar local"></canvas>
+          <span class="radar-label">RADAR LOCAL</span>
+        </div>
+
+        <div class="crosshair" id="crosshair"><i></i><i></i><i></i><i></i><span></span></div>
+
+        <footer class="hud-bottom">
+          <div class="scan-status panel">
+            <div><span class="panel-label">ESCÁNER</span><b id="scanner-charges">3 CARGAS</b></div>
+            <div><span class="panel-label">CATALOGADO</span><b id="scan-percent">0%</b></div>
+            <div><span class="panel-label">CENTINELAS</span><b id="sentinel-status" class="cyan">EN CALMA</b></div>
+          </div>
+          <div class="control-ribbon">
+            <span><kbd>WASD</kbd> MOVER</span><span><kbd>RATÓN</kbd> MIRAR</span><span><kbd>E</kbd> ESCANEAR</span><span><kbd>CLIC</kbd> MINAR</span><span><kbd>ESPACIO</kbd> JETPACK</span>
+          </div>
+          <div class="actions">
+            <button class="action-btn" data-action="scan" title="Escanear"><span class="action-key">E</span><span class="action-icon">◎</span><span class="action-name">ESCANEAR</span></button>
+            <button class="action-btn" data-action="mine" title="Mantener para minar"><span class="action-key">CLIC</span><span class="action-icon">⛏</span><span class="action-name">MINAR</span></button>
+            <button class="action-btn" data-action="jet" title="Mantener para jetpack"><span class="action-key">ESPACIO</span><span class="action-icon">↑</span><span class="action-name">JETPACK</span></button>
+            <button class="action-btn danger" data-action="shoot" title="Disparar"><span class="action-key">F</span><span class="action-icon">◉</span><span class="action-name">DISPARAR</span></button>
+            <button class="action-btn" id="inventory-btn" title="Inventario"><span class="action-key">I</span><span class="action-icon">▦</span><span class="action-name">INVENTARIO</span></button>
+          </div>
+        </footer>
+
+        <div id="toast" class="toast"></div>
+      </div>
+
+      <div id="touch-ui" class="touch-ui" aria-hidden="true">
+        <div id="joystick" class="joystick"><i id="joystick-knob"></i><span>MOVER</span></div>
+        <div class="look-hint">ARRASTRA PARA MIRAR</div>
+      </div>
+
+      <div id="orbit" class="orbit hidden" aria-hidden="true">
+        <div class="orbit-stars"></div>
+        <div class="orbit-planet"></div>
+        <div class="orbit-header">
+          <div class="panel orbit-panel">
+            <span class="panel-label">MODO ÓRBITA · PROPULSIÓN ESTABLE</span>
+            <h2 id="orbit-system">AEORION</h2>
+            <p id="orbit-meta">G · MINERÍA · ESTABLE · 4 PLANETAS</p>
+          </div>
+          <button id="orbit-close" class="btn ghost small"><span class="btn-copy"><b>VOLVER A SUPERFICIE</b><small>ATERRIZAJE AUTOMÁTICO</small></span></button>
+        </div>
+        <div class="orbit-actions">
+          <button id="orbit-map" class="btn ghost"><span class="btn-icon">⌬</span><span class="btn-copy"><b>MAPA GALÁCTICO</b><small>TRAZAR RUTA AL NÚCLEO</small></span></button>
+          <button id="orbit-station" class="btn ghost"><span class="btn-icon">◈</span><span class="btn-copy"><b>ESTACIÓN</b><small>COMERCIO Y MEJORAS</small></span></button>
+          <button id="orbit-warp" class="btn primary"><span class="btn-icon">ϟ</span><span class="btn-copy"><b>HIPERSALTO</b><small>CONSUME 1 CÉLULA DE DEFORMACIÓN</small></span></button>
+        </div>
+        <div class="orbit-note">SISTEMA SEMBRADO · <span id="orbit-seed">4E4D5321A17</span> · NAVE EN ÓRBITA ESTABLE</div>
+      </div>
+
+      <div id="warp-screen" class="warp-screen hidden" aria-hidden="true">
+        <div class="warp-tunnel"></div>
+        <div class="warp-copy">
+          <span class="panel-label">TRAZANDO RUTA ENTRE SEMILLAS</span>
+          <h2>SALTO INTERESTELAR</h2>
+          <div id="warp-route" class="warp-route">AEORION → SISTEMA SIGUIENTE</div>
+          <div class="warp-bar"><i id="warp-progress"></i></div>
+          <span id="warp-percent">0%</span>
+        </div>
+      </div>
+
+      <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-shell">
+          <div id="modal-content"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
