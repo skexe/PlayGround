@@ -1,0 +1,31 @@
+{
+  "name": "frontier-protocol",
+  "version": "1.0.0",
+  "description": "A procedural space exploration experience inspired by No Man's Sky.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skexe/PlayGround.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skexe/PlayGround/issues"
+  },
+  "homepage": "https://github.com/skexe/PlayGround#readme",
+  "dependencies": {
+    "simplex-noise": "^4.0.3",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  },
+  "type": "module"
+}

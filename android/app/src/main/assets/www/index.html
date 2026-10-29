@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07151a" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23ff7b3f' stroke-width='2'/%3E%3Cpath d='M4 20 28 12' stroke='%23ffc46b' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%2362f5d5'/%3E%3C/svg%3E" />
+    <meta name="description" content="Frontier Protocol: una experiencia de exploración espacial procedural inspirada en No Man's Sky." />
+    <title>No Man's Sky — Frontier Protocol</title>
+    <script type="module" crossorigin src="./assets/index-CRplKP3E.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DM1Dmxz1.css">
+  </head>
+  <body>
+    <canvas id="scene" aria-label="Mundo procedural alienígena"></canvas>
+
+    <div class="fx fx-vignette"></div>
+    <div class="fx fx-grain"></div>
+    <div class="fx fx-scan"></div>
+    <div class="fx fx-flash" id="flash"></div>
+
+    <div id="boot" class="boot">
+      <div class="boot-orbit"><i></i><i></i><i></i></div>
+      <div class="boot-copy">
+        <span>HELLO GAMES // SIMULATION CORE</span>
+        <strong id="bootStatus">INICIALIZANDO UNIVERSO</strong>
+        <div class="boot-bar"><i id="bootBar"></i></div>
+        <small>SEED 0x7A31 // EUCLID GALAXY</small>
+      </div>
+    </div>
+
+    <section id="menu" class="screen menu is-visible" aria-label="Menú principal">
+      <div class="menu-ghost" aria-hidden="true">EXPLORE</div>
+      <header class="menu-top">
+        <div class="brand"><span class="brand-mark"></span> HELLO GAMES <span class="slash">//</span> EXPLORATION SIMULATION</div>
+        <div class="menu-build">BUILD 1.0.0 <span>ANDROID / WEB</span></div>
+      </header>
+
+      <div class="menu-main">
+        <div class="menu-left">
+          <div class="eyebrow"><span class="pulse-dot"></span> FRONTIER PROTOCOL <span class="dim">/ 01</span></div>
+          <h1 class="logo">
+            <span>NO MAN'S</span>
+            <span class="logo-accent">SKY</span>
+          </h1>
+          <div class="logo-rule"><i></i><span>AN INFINITE UNIVERSE</span></div>
+          <p class="menu-lede">Cada estrella, planeta y criatura es única. Repara tu nave, sobrevive a la atmósfera y traza tu propio camino hacia el centro de la galaxia.</p>
+          <div class="menu-actions">
+            <button id="startBtn" class="btn-primary" type="button">
+              <span class="play-tri"></span>
+              <span class="btn-copy"><b>PLAY</b><small>INICIAR EXPEDICIÓN</small></span>
+              <span class="btn-arrow">↗</span>
+            </button>
+            <button id="codexBtn" class="btn-ghost" type="button">CÓDICE <span>i</span></button>
+          </div>
+          <div class="menu-hints">
+            <span><kbd>WASD</kbd> MOVER</span>
+            <span><kbd>RATÓN</kbd> MIRAR</span>
+            <span><kbd>CLIC</kbd> MINAR</span>
+            <span><kbd>F</kbd> ESCANEAR</span>
+          </div>
+        </div>
+
+        <aside class="menu-right">
+          <div class="planet-card">
+            <div class="planet-card-top">
+              <span>PLANETA ACTUAL</span><span class="live">● LIVE</span>
+            </div>
+            <div class="planet-visual">
+              <div class="planet-orb"></div>
+              <div class="planet-ring"></div>
+              <div class="planet-scan"></div>
+              <span class="orbit-dot d1"></span><span class="orbit-dot d2"></span>
+            </div>
+            <div class="planet-name">KORVAX PRIME</div>
+            <div class="planet-sub">SISTEMA KORVAX-7 <span>//</span> CLASE G</div>
+            <div class="planet-stats">
+              <div><span>BIOMA</span><b>BOSQUE BIOLUMINISCENTE</b></div>
+              <div><span>CLIMA</span><b>TORMENTAS DE CENIZA</b></div>
+              <div><span>FAUNA</span><b>7 ESPECIES</b></div>
+              <div><span>CENTINELAS</span><b class="warn">BAJA ACTIVIDAD</b></div>
+            </div>
+          </div>
+          <div class="menu-quote">“El universo es un océano de secretos. Tú eres la única ola.”<span>— ARCHIVO ATLAS // 04</span></div>
+        </aside>
+      </div>
+
+      <footer class="menu-foot">
+        <span>PROCEDURAL ENGINE v4.8</span>
+        <span>18,446,744,073,709,551,616 PLANETAS</span>
+        <span class="foot-status"><i></i> SEÑAL ESTABLE</span>
+      </footer>
+    </section>
+
+    <section id="codex" class="screen codex" aria-label="Códice">
+      <div class="codex-inner">
+        <div class="codex-head">
+          <div><span class="eyebrow">ARCHIVO ATLAS // CÓDICE</span><h2>MANUAL DE CAMPO</h2></div>
+          <button class="close-btn" data-close="codex" type="button">CERRAR <span>×</span></button>
+        </div>
+        <div class="codex-grid">
+          <article><span class="num">01</span><h3>EXPLORA</h3><p>Camina por la superficie. Escanea la flora, la fauna y los minerales para descubrir nuevas formas de vida y obtener Unidades.</p></article>
+          <article><span class="num">02</span><h3>EXTRAE</h3><p>Mantén el disparo sobre un recurso para extraerlo. La Ferrita, el Carbono y el Sodio son la base de toda tecnología.</p></article>
+          <article><span class="num">03</span><h3>SOBREVIVE</h3><p>El oxígeno y el escudo térmico se agotan. Recarga el soporte vital antes de que la atmósfera te consuma.</p></article>
+          <article><span class="num">04</span><h3>REPARA</h3><p>Fabrica un Núcleo de Salto con los recursos recogidos. Sin él, tu nave no podrá abandonar este sistema.</p></article>
+          <article><span class="num">05</span><h3>DESPEGA</h3><p>Regresa a la nave y pulsa E. Atraviesa la atmósfera sin pantallas de carga y alcanza la órbita.</p></article>
+          <article><span class="num">06</span><h3>CONTROLES</h3><p>WASD mover · Ratón mirar · Clic minar · F escanear · C inventario · E interactuar · Shift correr · Espacio saltar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="hud" class="hud" aria-label="Interfaz de juego">
+      <div class="hud-top">
+        <div class="hud-location">
+          <span class="hud-label">UBICACIÓN</span>
+          <strong>KORVAX PRIME</strong>
+          <small>KORVAX-7 // CLASE G // EUCLID</small>
+        </div>
+        <div class="compass">
+          <div class="compass-line"></div>
+          <div class="compass-ticks" id="compassTicks"></div>
+          <div class="compass-needle" id="compassNeedle"></div>
+          <div class="compass-center"><span id="compassHeading">N</span></div>
+          <div class="compass-deg" id="compassDeg">000°</div>
+        </div>
+        <div class="hud-resources">
+          <div class="resource-pill"><i class="res-icon units"></i><span>UNIDADES</span><b id="units">1 240</b></div>
+          <div class="resource-pill"><i class="res-icon nanites"></i><span>NANITOS</span><b id="nanites">18</b></div>
+        </div>
+      </div>
+
+      <div class="mission-panel">
+        <div class="mission-head"><span class="pulse-dot"></span> MISIÓN PRIMARIA <span id="missionStep">01 / 04</span></div>
+        <h2 id="missionTitle">RECOLECTA FERRITA</h2>
+        <p id="missionDesc">Extrae mineral ferroso de las rocas oscuras cercanas.</p>
+        <div class="mission-progress"><i id="missionBar"></i></div>
+        <div class="mission-count"><span id="missionProgress">0 / 12</span><span id="missionReward">+ 250 UNIDADES</span></div>
+      </div>
+
+      <div class="reticle" id="reticle">
+        <span class="r-corner tl"></span><span class="r-corner tr"></span>
+        <span class="r-corner bl"></span><span class="r-corner br"></span>
+        <span class="r-dot"></span>
+        <div class="reticle-label" id="reticleLabel"></div>
+      </div>
+
+      <div class="target-card" id="targetCard">
+        <span class="target-kind" id="targetKind">RECURSO</span>
+        <strong id="targetName">FERRITA</strong>
+        <div class="target-bar"><i id="targetBar"></i></div>
+        <small id="targetHint">MANTÉN EL DISPARO PARA EXTRAER</small>
+      </div>
+
+      <div class="hud-left">
+        <div class="vitals">
+          <div class="vital">
+            <div class="vital-head"><span><i class="v-icon oxy"></i> SOPORTE VITAL</span><b id="oxygenVal">100%</b></div>
+            <div class="bar"><i id="oxygenBar" class="oxy"></i></div>
+          </div>
+          <div class="vital">
+            <div class="vital-head"><span><i class="v-icon shield"></i> ESCUDO TÉRMICO</span><b id="shieldVal">86%</b></div>
+            <div class="bar"><i id="shieldBar" class="shield"></i></div>
+          </div>
+          <div class="vital">
+            <div class="vital-head"><span><i class="v-icon hazard"></i> PELIGRO AMBIENTAL</span><b class="hazard-val" id="hazardVal">ESTABLE</b></div>
+            <div class="bar thin"><i id="hazardBar" class="hazard"></i></div>
+          </div>
+        </div>
+        <div class="controls-hint">
+          <span><kbd>WASD</kbd> MOVER</span>
+          <span><kbd>F</kbd> ESCANEAR</span>
+          <span><kbd>C</kbd> CRAFT</span>
+          <span><kbd>E</kbd> INTERACTUAR</span>
+          <span><kbd>R</kbd> RECARGAR</span>
+        </div>
+      </div>
+
+      <div class="hud-bottom">
+        <div class="quickbar" id="quickbar">
+          <div class="quick res-ferrita" data-res="ferrita"><i></i><span>FERRITA</span><b>0</b></div>
+          <div class="quick res-carbono" data-res="carbono"><i></i><span>CARBONO</span><b>0</b></div>
+          <div class="quick res-sodio" data-res="sodio"><i></i><span>SODIO</span><b>0</b></div>
+          <div class="quick res-oxigeno" data-res="oxigeno"><i></i><span>OXÍGENO</span><b>0</b></div>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="radar">
+          <canvas id="radar" width="220" height="220"></canvas>
+          <div class="radar-ring"></div>
+          <span class="radar-label">RADAR // 60m</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-head"><span>MULTIHERRAMIENTA</span><b>MK-II</b></div>
+          <div class="tool-body">
+            <div class="tool-charge"><i id="toolCharge"></i></div>
+            <div class="tool-meta"><span>RAYO MINERO</span><b id="toolStatus">LISTO</b></div>
+            <div class="tool-mode"><i class="active"></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notifications" id="notifications"></div>
+      <div class="scan-vignette" id="scanVignette"></div>
+      <div class="interact-prompt" id="interactPrompt"><kbd>E</kbd><span id="interactText">REPARAR NAVE</span></div>
+
+    </section>
+
+    <div class="mobile-ui" id="mobileUI">
+      <div class="joy-zone" id="joyZone"><div class="joy-base"><div class="joy-knob" id="joyKnob"></div></div><span>MOVER</span></div>
+      <div class="touch-actions">
+        <button class="touch-btn scan" id="touchScan" type="button"><i>◎</i><span>ESCANEAR</span></button>
+        <button class="touch-btn mine" id="touchMine" type="button"><i>◈</i><span>MINAR</span></button>
+        <button class="touch-btn craft" id="touchCraft" type="button"><i>▤</i><span>CRAFT</span></button>
+        <button class="touch-btn jump" id="touchJump" type="button"><i>↥</i><span>SALTAR</span></button>
+      </div>
+      <div class="touch-space" id="touchSpace">
+        <button class="touch-btn boost" id="touchBoost" type="button"><i>⇈</i><span>IMPULSO</span></button>
+        <button class="touch-btn thrust" id="touchThrust" type="button"><i>▲</i><span>ACELERAR</span></button>
+      </div>
+    </div>
+
+    <section id="panel" class="screen panel" aria-label="Inventario y fabricación">
+      <div class="panel-inner">
+        <div class="panel-head">
+          <div><span class="eyebrow">EXOTRAJE // INVENTARIO</span><h2>FABRICACIÓN</h2></div>
+          <div class="panel-head-right">
+            <div class="panel-currency"><span>UNIDADES</span><b id="panelUnits">1 240</b></div>
+            <div class="panel-currency"><span>NANITOS</span><b id="panelNanites">18</b></div>
+            <button class="close-btn" data-close="panel" type="button">CERRAR <span>×</span></button>
+          </div>
+        </div>
+        <div class="panel-grid">
+          <div class="inventory-pane">
+            <div class="pane-title"><span>SUMINISTROS</span><small>EXOTRAJE / 24 RANURAS</small></div>
+            <div class="slots" id="slots"></div>
+            <div class="pane-note"><i></i> Los recursos se extraen con el rayo minero de la multihherramienta.</div>
+          </div>
+          <div class="craft-pane">
+            <div class="pane-title"><span>BLUEPRINTS</span><small>TECNOLOGÍA DISPONIBLE</small></div>
+            <div class="recipe featured" id="recipeCore">
+              <div class="recipe-icon core"></div>
+              <div class="recipe-copy">
+                <span class="recipe-tag">TECNOLOGÍA DE HIPERIMPULSO</span>
+                <h3>NÚCLEO DE SALTO</h3>
+                <p>Un núcleo de antimateria estabilizado. Necesario para iniciar el salto interestelar.</p>
+                <div class="recipe-costs">
+                  <span data-cost="ferrita"><i class="dot ferrita"></i> FERRITA <b>0/12</b></span>
+                  <span data-cost="carbono"><i class="dot carbono"></i> CARBONO <b>0/8</b></span>
+                  <span data-cost="sodio"><i class="dot sodio"></i> SODIO <b>0/5</b></span>
+                </div>
+              </div>
+              <button class="craft-btn" id="craftBtn" type="button">FABRICAR <span>↵</span></button>
+            </div>
+            <div class="recipe locked">
+              <div class="recipe-icon warp"></div>
+              <div class="recipe-copy"><span class="recipe-tag">BLOQUEADO</span><h3>MOTOR DE HIPERIMPULSO</h3><p>Requiere el Núcleo de Salto y una matriz de indio.</p></div>
+              <button class="craft-btn" type="button" disabled>BLOQUEADO</button>
+            </div>
+            <div class="recipe locked">
+              <div class="recipe-icon shield"></div>
+              <div class="recipe-copy"><span class="recipe-tag">BLOQUEADO</span><h3>ESCUDO DE ABLACIÓN</h3><p>Protección avanzada contra tormentas extremas.</p></div>
+              <button class="craft-btn" type="button" disabled>BLOQUEADO</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="launch" class="launch" aria-label="Secuencia de despegue">
+      <div class="launch-bars"><i></i><i></i></div>
+      <div class="launch-copy">
+        <span class="eyebrow">SECUENCIA DE DESPEGUE // AUTORIZADA</span>
+        <h2>ABANDONANDO<br /><em>KORVAX PRIME</em></h2>
+        <div class="launch-status"><span id="launchStatus">INICIANDO PROPULSORES</span><b id="launchPct">0%</b></div>
+        <div class="launch-bar"><i id="launchBar"></i></div>
+        <div class="launch-log" id="launchLog"></div>
+      </div>
+      <div class="launch-ship"><div class="thruster"></div></div>
+    </section>
+
+    <section id="spaceHud" class="space-hud" aria-label="Vuelo orbital">
+      <div class="space-top">
+        <div><span>ÓRBITA BAJA</span><strong>KORVAX PRIME</strong></div>
+        <div class="space-system"><span>SISTEMA</span><strong>KORVAX-7</strong></div>
+        <div class="space-speed"><span>VELOCIDAD</span><strong id="spaceSpeed">0 u/s</strong></div>
+      </div>
+      <div class="space-center">
+        <div class="space-reticle"><i></i><i></i><i></i><i></i><span></span></div>
+      </div>
+      <div class="space-bottom">
+        <div class="space-hint"><kbd>W</kbd> ACELERAR <span>·</span> <kbd>RATÓN</kbd> VIRAR <span>·</span> <kbd>SHIFT</kbd> IMPULSO</div>
+        <button id="warpBtn" class="warp-btn" type="button"><span>⌁</span> INICIAR SALTO <small>REQUIERE NÚCLEO DE SALTO</small></button>
+      </div>
+      <div class="warp-overlay" id="warpOverlay">
+        <div class="warp-lines"></div>
+        <div class="warp-copy"><span>HIPERIMPULSO</span><strong id="warpTitle">CALCULANDO RUTA</strong><small id="warpSub">DESTINO // SISTEMA DESCONOCIDO</small></div>
+      </div>
+    </section>
+
+    <section id="arrival" class="screen arrival" aria-label="Nuevo sistema">
+      <div class="arrival-inner">
+        <span class="eyebrow">SALTO COMPLETADO // NUEVO SISTEMA</span>
+        <h2>HORIZONTE<br /><em>DESCONOCIDO</em></h2>
+        <p>Has llegado a un sistema inexplorado. La nave necesita enfriar el núcleo antes de un nuevo salto. La galaxia se extiende ante ti.</p>
+        <div class="arrival-stats">
+          <div><span>SISTEMA</span><b>IXAR-9</b></div>
+          <div><span>ESTRELLA</span><b>ENANA AZUL</b></div>
+          <div><span>PLANETAS</span><b>4</b></div>
+          <div><span>PELIGRO</span><b class="warn">ALTO</b></div>
+        </div>
+        <button id="landBtn" class="btn-primary" type="button"><span class="play-tri"></span><span class="btn-copy"><b>LAND</b><small>ATERRIZAR EN IXAR-9B</small></span><span class="btn-arrow">↗</span></button>
+      </div>
+    </section>
+
+    <div class="rotate-note" id="rotateNote"><span>↻</span> GIRA EL DISPOSITIVO PARA UNA EXPERIENCIA COMPLETA</div>
+
+  </body>
+</html>
