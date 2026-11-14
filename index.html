@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><meta name="theme-color" content="#101510"><meta name="description" content="Wild Frontier: La Frontera Maldita — ARPG de supervivencia táctil."><title>Wild Frontier — La Frontera Maldita</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="game">
+  <canvas id="world" aria-label="Mundo de juego"></canvas>
+  <div class="vignette"></div>
+  <header class="topbar">
+    <button class="brand" id="homeBtn"><span class="brand-mark">✦</span><span><b>WILD FRONTIER</b><small>LA FRONTERA MALDITA</small></span></button>
+    <div class="zone-title"><span id="actLabel">ACTO I · TIER 1</span><b id="zoneName">Playas del Náufrago</b><small id="weather">Marea baja · Brisa marina</small></div>
+    <div class="top-actions"><button class="icon-btn" id="mapBtn" title="Mapa">⌖</button><button class="icon-btn" id="bagBtn" title="Mochila">▤</button><button class="icon-btn" id="pauseBtn" title="Pausa">Ⅱ</button></div>
+  </header>
+  <section class="hero-hud"><div class="portrait"><span>⚔</span><i></i></div><div class="vitals"><div class="hero-line"><b id="heroName">NÁUFRAGO</b><span id="levelText">NV. 1 · ALDEANO</span><span class="gold">◈ <i id="goldText">24</i></span></div><div class="bar hp"><i id="hpBar"></i><span id="hpText">100 / 100</span></div><div class="bar xp"><i id="xpBar"></i><span id="xpText">0 / 80 XP</span></div><div class="bar stam"><i id="stamBar"></i></div></div></section>
+  <div class="objective"><span class="quest-icon">✦</span><div><small>RUMBO A PUERTO OCASO</small><b id="questText">Sobrevive. Reúne recursos y encuentra el camino.</b></div><button id="questBtn">›</button></div>
+  <div class="toast" id="toast"></div>
+  <div class="interact-hint" id="interactHint">◉ <span>Recoger</span> <kbd>F</kbd></div>
+  <div class="combat-feed" id="combatFeed"></div>
+  <nav class="mobile-controls" aria-label="Controles del juego">
+    <div class="joystick" id="joystick"><div class="stick-ring"></div><div class="stick-knob" id="stickKnob"></div></div>
+    <div class="control-right"><button class="skill" id="skill1"><small>Q</small><span>✦</span></button><button class="skill" id="skill2"><small>E</small><span>◈</span></button><button class="dodge" id="dodgeBtn">↗</button><button class="attack" id="attackBtn"><span>⚔</span><small>ATACAR</small></button></div>
+    <button class="gather" id="gatherBtn">◉ <small>USAR</small></button>
+  </nav>
+  <aside class="desktop-help">WASD mover <i>·</i> ESPACIO atacar <i>·</i> Q / E habilidades <i>·</i> F recoger <i>·</i> SHIFT esquivar</aside>
+  <div class="panel-shade" id="shade"><section class="panel" id="panel"><button class="close" id="closePanel">×</button><div id="panelContent"></div></section></div>
+  <div class="level-flash" id="levelFlash"><span>✦</span><b>¡NUEVO NIVEL!</b><small id="levelFlashText">NV. 2</small></div>
+  <div class="death-screen" id="deathScreen"><div class="death-card"><span class="death-mark">☠</span><small>LA NIEBLA TE HA RECLAMADO</small><h2>Has caído, viajero</h2><p id="deathText">Tu mochila aguarda en el lugar de tu caída.</p><button id="respawnBtn">VOLVER AL CAMPAMENTO <span>→</span></button></div></div>
+</main><script src="game.js"></script>
+</body></html>
